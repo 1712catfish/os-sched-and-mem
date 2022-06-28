@@ -65,6 +65,12 @@ void * cpu(void * arg) {
         // burst time is zero. If so, free its PCB. Otherwise,
         // put its PCB back to the queue.
 
+        proc->burst_time -= exec_time;
+        if (proc->burst_time == 0)
+            free(proc);
+        else
+            en_queue(&ready_queue, proc);
+
         printf("%d-%d: Execute %d\n", start, timestamp, id);
 	}
 	return NULL;
