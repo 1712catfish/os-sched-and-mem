@@ -201,6 +201,7 @@ void * first_fit_allocator(unsigned int size) {
 	} while (!found && current_region != NULL);
 
 	if (found) {
+	    printf("%d\t", current_region->size);
 		struct mem_region* tmp =
 			(struct mem_region*)malloc(sizeof(struct mem_region));
 		tmp->pointer = current_region->pointer;
