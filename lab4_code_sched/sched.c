@@ -48,8 +48,7 @@ void * cpu(void * arg) {
         */
 
         // TODO: Calculate exec_time from process's PCB
-        int exec_time = fcfs_exec_time(proc);
-        //int exec_time = round_robin_exec_time(proc);
+        int exec_time = 0;
 
         usleep(exec_time * TIME_UNIT);
         timestamp += exec_time;
