@@ -14,24 +14,6 @@ static int load_done = 0;
 static int timeslot; 	// The maximum amount of time a process is allowed
 			// to be run on CPU before being swapped out
 
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
-
-int fcfs_exec_time(struct pcb_t * proc) {
-    return proc->burst_time;
-}
-
-int round_robin_exec_time(struct pcb_t * proc) {
-    return MIN(timeslot, proc->burst_time);
-}
-
-void post_process(struct pcb_t * proc, int exec_time) {
-
-}
-
-
-
-
 // Emulate the CPU
 void * cpu(void * arg) {
 	int timestamp = 0;
