@@ -30,13 +30,20 @@ int mem_init(unsigned int size) {
 
 	/* Prealocate the mem pool based on used request */
 	mem_pool = malloc(size);
-
 	/* Initial free list with only 1 region */
 	free_regions = (struct mem_region *)malloc(sizeof(struct mem_region));
 	free_regions->size = size;
 	free_regions->pointer = (char*)mem_pool;
 	free_regions->next = NULL;
 	free_regions->prev = NULL;
+
+    mem_pool = malloc(size);
+	curr = (struct mem_region *)malloc(sizeof(struct mem_region));
+	curr->size = size;
+	curr->pointer = mem_pool;
+	curr->next = free_regions;
+	curr->prev = NULL
+	free_regions->prev = curr;
 
 	return (mem_pool != 0);
 }
@@ -194,6 +201,7 @@ void * first_fit_allocator(unsigned int size) {
 	} while (!found && current_region != NULL);
 
 	if (found) {
+	    printf("%d", current_region->size);
 		struct mem_region* tmp =
 			(struct mem_region*)malloc(sizeof(struct mem_region));
 		tmp->pointer = current_region->pointer;
@@ -248,6 +256,7 @@ void * best_fit_allocator(unsigned int size) {
 	current_region = best_region;
 
 	if (found) {
+		printf("%d\t", current_region->size);
 		struct mem_region* tmp =
 			(struct mem_region*)malloc(sizeof(struct mem_region));
 		tmp->pointer = current_region->pointer;
