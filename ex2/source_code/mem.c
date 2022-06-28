@@ -289,17 +289,17 @@ void * worst_fit_allocator(unsigned int size) {
 	/* First fit example */
 	int found = 0;
 	struct mem_region * current_region = free_regions;
-    struct mem_region * best_region = NULL;
+    struct mem_region * worst_region = NULL;
 
 	do {
 		if (size <= current_region->size) {
 			found = 1;
-			if (best_region == NULL || best_region->size > current_region->size)
-			    best_region = current_region;
+			if (worst_region == NULL || worst_region->size < current_region->size)
+			    worst_region = current_region;
 		}
 		current_region = current_region->next;
 	} while (current_region != NULL);
-	current_region = best_region;
+	current_region = worst_region;
 
 	if (found) {
 		struct mem_region* tmp =
