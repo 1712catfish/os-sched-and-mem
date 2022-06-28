@@ -240,10 +240,12 @@ void * best_fit_allocator(unsigned int size) {
 	do {
 		if (size <= current_region->size) {
 			found = 1;
-		}else{
-			current_region = current_region->next;
+			if (best_region == NULL || best_region->size > current_region->size)
+			    best_region = current_region;
 		}
-	} while (!found && current_region != NULL);
+		current_region = current_region->next;
+	} while (current_region != NULL);
+	current_region = best_region;
 
 	if (found) {
 		struct mem_region* tmp =
