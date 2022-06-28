@@ -185,6 +185,7 @@ void * first_fit_allocator(unsigned int size) {
 	/* First fit example */	
 	int found = 0;
 	struct mem_region * current_region = free_regions;
+
 	do {
 		if (size <= current_region->size) {
 			found = 1;
@@ -240,12 +241,10 @@ void * best_fit_allocator(unsigned int size) {
 	do {
 		if (size <= current_region->size) {
 			found = 1;
-			if (best_region == NULL || best_region->size > current_region->size)
-			    best_region = current_region;
+		}else{
+			current_region = current_region->next;
 		}
-		current_region = current_region->next;
-	} while (current_region != NULL);
-	current_region = best_region;
+	} while (!found && current_region != NULL);
 
 	if (found) {
 		struct mem_region* tmp =
