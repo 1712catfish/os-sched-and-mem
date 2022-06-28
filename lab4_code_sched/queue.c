@@ -29,7 +29,7 @@ struct pcb_t * de_queue(struct pqueue_t * q) {
     }
 
     pthread_mutex_unlock(&q->lock);
-	return proc;
+    return proc;
 }
 
 /* Put PCB of a process to the queue. */
