@@ -17,20 +17,16 @@ static int timeslot; 	// The maximum amount of time a process is allowed
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
-int fcfs_exec_t(struct pcb_t * proc) {
+int fcfs_exec_time(struct pcb_t * proc) {
     return proc->burst_time;
 }
 
-int round_robin_exec_t(struct pcb_t * proc) {
+int round_robin_exec_time(struct pcb_t * proc) {
     return MIN(timeslot, proc->burst_time);
 }
 
 void post_process(struct pcb_t * proc, int exec_time) {
-    proc->burst_time -= exec_time;
-    if (proc->burst_time == 0)
-        free(proc);
-    else
-        en_queue(&ready_queue, proc);
+
 }
 
 
@@ -59,7 +55,8 @@ void * cpu(void * arg) {
         */
 
         // TODO: Calculate exec_time from process's PCB
-        int exec_time = round_robin_exec_t(proc);
+//        int exec_time = fcfs_exec_time(proc);
+        int exec_time = round_robin_exec_time(proc);
 
         usleep(exec_time * TIME_UNIT);
         timestamp += exec_time;
@@ -67,7 +64,7 @@ void * cpu(void * arg) {
         // TODO: Check if the process has terminated (i.e. its
         // burst time is zero. If so, free its PCB. Otherwise,
         // put its PCB back to the queue.
-        post_process(proc, exec_time);
+
         printf("%d-%d: Execute %d\n", start, timestamp, id);
 	}
 	return NULL;
