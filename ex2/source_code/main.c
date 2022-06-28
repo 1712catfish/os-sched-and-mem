@@ -12,9 +12,10 @@ void * proc(void *args) {
 	int index = 0;
 	char * mem[ARRAY_SIZE];
 	for (i = 0; i < ARRAY_SIZE; i++) {
-		if (rand() % 2) {
+		if (1) {
 			/* Allocate memory */
-			unsigned int size = 1 << ((rand() % 4) + 4);
+//			unsigned int size = 1 << ((rand() % 4) + 4);
+			unsigned int size = 1 << 6;
 			mem[index] = mem_alloc(size);
 			if (mem[index] != NULL) {
 				index++;

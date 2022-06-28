@@ -38,11 +38,11 @@ int mem_init(unsigned int size) {
 	free_regions->prev = NULL;
 
     mem_pool = malloc(size);
-	curr = (struct mem_region *)malloc(sizeof(struct mem_region));
+	struct mem_region * curr = (struct mem_region *)malloc(sizeof(struct mem_region));
 	curr->size = size;
 	curr->pointer = mem_pool;
 	curr->next = free_regions;
-	curr->prev = NULL
+	curr->prev = NULL;
 	free_regions->prev = curr;
 
 	return (mem_pool != 0);
@@ -82,7 +82,7 @@ void * mem_alloc(unsigned int size) {
 
 	void * pointer = first_fit_allocator(size);
 //	void * pointer = best_fit_allocator(size);
-//	void * pointer = worst_fit_allocator(size);
+//	void * pointer =  worst_fit_allocator(size);
 
 	// FOR VERIFICATION ONLY. DO NOT REMOVE THESE LINES
 	if (pointer != NULL) {
@@ -201,7 +201,6 @@ void * first_fit_allocator(unsigned int size) {
 	} while (!found && current_region != NULL);
 
 	if (found) {
-	    printf("%d", current_region->size);
 		struct mem_region* tmp =
 			(struct mem_region*)malloc(sizeof(struct mem_region));
 		tmp->pointer = current_region->pointer;
@@ -256,7 +255,7 @@ void * best_fit_allocator(unsigned int size) {
 	current_region = best_region;
 
 	if (found) {
-		printf("%d\t", current_region->size);
+//		printf("%d\t", current_region->size);
 		struct mem_region* tmp =
 			(struct mem_region*)malloc(sizeof(struct mem_region));
 		tmp->pointer = current_region->pointer;
