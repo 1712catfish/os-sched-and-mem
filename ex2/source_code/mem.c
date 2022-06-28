@@ -21,7 +21,7 @@ struct mem_region * used_regions = NULL;
 
 static void * first_fit_allocator(unsigned int size);
 static void * best_fit_allocator(unsigned int size);
-static void * worse_fit_allocator(unsigned int size);
+static void * worst_fit_allocator(unsigned int size);
 
 
 int mem_init(unsigned int size) {
@@ -75,7 +75,7 @@ void * mem_alloc(unsigned int size) {
 
 	void * pointer = first_fit_allocator(size);
 //	void * pointer = best_fit_allocator(size);
-//	void * pointer = worse_fit_allocator(size);
+//	void * pointer = worst_fit_allocator(size);
 
 	// FOR VERIFICATION ONLY. DO NOT REMOVE THESE LINES
 	if (pointer != NULL) {
@@ -235,17 +235,17 @@ void * best_fit_allocator(unsigned int size) {
 	/* First fit example */
 	int found = 0;
 	struct mem_region * current_region = free_regions;
-    struct mem_region * worse_region = NULL;
+    struct mem_region * best_region = NULL;
 
 	do {
 		if (size <= current_region->size) {
 			found = 1;
-			if (worse_region == NULL || worse_region->size < current_region->size)
-			    worse_region = current_region;
+			if (best_region == NULL || best_region->size > current_region->size)
+			    best_region = current_region;
 		}
 		current_region = current_region->next;
 	} while (current_region != NULL);
-	current_region = worse_region;
+	current_region = best_region;
 
 	if (found) {
 		struct mem_region* tmp =
@@ -285,21 +285,21 @@ void * best_fit_allocator(unsigned int size) {
 	}
 }
 
-void * worse_fit_allocator(unsigned int size) {
+void * worst_fit_allocator(unsigned int size) {
 	/* First fit example */
 	int found = 0;
 	struct mem_region * current_region = free_regions;
-    struct mem_region * worse_region = NULL;
+    struct mem_region * best_region = NULL;
 
 	do {
 		if (size <= current_region->size) {
 			found = 1;
-			if (worse_region == NULL || worse_region->size < current_region->size)
-			    worse_region = current_region;
+			if (best_region == NULL || best_region->size > current_region->size)
+			    best_region = current_region;
 		}
 		current_region = current_region->next;
 	} while (current_region != NULL);
-	current_region = worse_region;
+	current_region = best_region;
 
 	if (found) {
 		struct mem_region* tmp =
