@@ -39,10 +39,10 @@ void en_queue(struct pqueue_t * q, struct pcb_t * proc) {
     proc_qitem->next=NULL;
 
     pthread_mutex_lock(&q->lock);
-	if (q->head == NULL)
-	    q->head = proc_qitem;
-	else
-	    q->tail->next = proc_qitem;
+    if (q->head == NULL)
+        q->head = proc_qitem;
+    else
+        q->tail->next = proc_qitem;
     q->tail = proc_qitem;
     pthread_mutex_unlock(&q->lock);
 }
