@@ -201,19 +201,18 @@ void * first_fit_allocator(unsigned int size) {
 	} while (!found && current_region != NULL);
 
 	if (found) {
-	    printf("%d\t", current_region->size);
-		struct mem_region* tmp =
-			(struct mem_region*)malloc(sizeof(struct mem_region));
-		tmp->pointer = current_region->pointer;
-		tmp->size = size;
-		tmp->next = used_regions;
-		tmp->prev = NULL;
-		if (used_regions == NULL) {
-			used_regions = tmp;
-		}else{
-			used_regions->prev = tmp;
-			used_regions = tmp;
-		}
+        struct mem_region* tmp =
+            (struct mem_region*)malloc(sizeof(struct mem_region));
+        tmp->pointer = current_region->pointer;
+        tmp->size = size;
+        tmp->next = used_regions;
+        tmp->prev = NULL;
+        if (used_regions == NULL) {
+            used_regions = tmp;
+        }else{
+            used_regions->prev = tmp;
+            used_regions = tmp;
+        }
 		if (current_region->size == size) {
 			if (current_region == free_regions) {
 				free_regions = free_regions->next;
