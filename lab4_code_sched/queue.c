@@ -28,7 +28,7 @@ struct pcb_t * de_queue(struct pqueue_t * q) {
         q->head = p;
     }
 
-	pthread_mutex_unlock(&q->lock);
+    pthread_mutex_unlock(&q->lock);
 	return proc;
 }
 
